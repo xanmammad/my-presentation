@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismixan Mammadov - Interactive Penetration Tester Portfolio</title>
+    <style>
+        /* CSS Variables for Light/Dark Themes */
+        .light-theme {
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.06);
+            --accent: #059669;
+            --bg-body: #f1f5f9;
+            --bg-card: rgba(255, 255, 255, 0.45);
+            --bg-glass: rgba(255, 255, 255, 0.4);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border: rgba(255, 255, 255, 0.6);
+            --border-hover: rgba(37, 99, 235, 0.25);
+            --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --body-gradient: radial-gradient(at 0% 0%, rgba(219, 234, 254, 0.6) 0px, transparent 50%),
+                             radial-gradient(at 100% 0%, rgba(243, 232, 255, 0.6) 0px, transparent 50%),
+                             radial-gradient(at 50% 100%, rgba(224, 242, 254, 0.4) 0px, transparent 50%);
+        }
+
+        .dark-theme {
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.12);
+            --accent: #10b981;
+            --bg-body: #07090e;
+            --bg-card: rgba(17, 24, 39, 0.65);
+            --bg-glass: rgba(15, 23, 42, 0.4);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(59, 130, 246, 0.35);
+            --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+            --body-gradient: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                             radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.08) 0px, transparent 50%);
+        }
+
+        /* General Layout */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            background-image: var(--body-gradient);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 3rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Intro Animations on page load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-section {
+            opacity: 0;
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .resume-container > .animate-section:nth-child(2) { animation-delay: 0.05s; }
+        .resume-container > .animate-section:nth-child(3) { animation-delay: 0.12s; }
+        .resume-container > .animate-section:nth-child(4) { animation-delay: 0.2s; }
+        .resume-container > .animate-section:nth-child(5) { animation-delay: 0.28s; }
+        .resume-container > .animate-section:nth-child(6) { animation-delay: 0.36s; }
+        .resume-container > .animate-section:nth-child(7) { animation-delay: 0.44s; }
+
+        /* Resume Container */
+        .resume-container {
+            max-width: 860px;
+            width: 100%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3.5rem;
+            box-shadow: var(--shadow);
+            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Controls Panel */
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .dark-theme .btn-action {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .btn-action:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* Header Text styling */
+        header {
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            padding-bottom: 2rem;
+        }
+
+        .dark-theme header {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        .contact-icon {
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            margin-bottom: 2.5rem;
+        }
+
+        .summary-box p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            padding-bottom: 0.4rem;
+        }
+
+        .dark-theme .section-title {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.04);
+        }
+
+        .skill-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-card h4 .dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            border-radius: 6px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .dark-theme .skill-tag {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            bottom: 0.4rem;
+            width: 1px;
+            background: rgba(15, 23, 42, 0.08);
+        }
+
+        .dark-theme .timeline::before {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.5rem;
+            top: 0.45rem;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.15);
+            border: 1px solid var(--bg-body);
+            transition: all 0.2s ease;
+        }
+
+        .dark-theme .timeline-dot {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .role-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .company-name {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .company-name span {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            color: var(--text-secondary);
+        }
+
+        .dark-theme .timeline-date {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .timeline-content ul {
+            list-style-position: outside;
+            padding-left: 1.1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .timeline-content li::marker {
+            color: var(--text-secondary);
+        }
+
+        .timeline-item:hover .timeline-content li::marker {
+            color: var(--primary);
+        }
+
+        /* Interactive Certificates */
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+        }
+
+        .cert-category-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            padding-bottom: 0.4rem;
+        }
+
+        .dark-theme .cert-category-card h4 {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .cert-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .cert-item.interactive-cert {
+            cursor: pointer;
+        }
+
+        .cert-item.interactive-cert:hover {
+            background: var(--primary-glow);
+            transform: translateX(3px);
+        }
+
+        .cert-item svg {
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+            color: var(--accent);
+            opacity: 0.9;
+        }
+
+        .cert-name {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .cert-action-badge {
+            font-size: 0.72rem;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .dark-theme .cert-action-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .cert-issuer {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin: 5% auto;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            animation: modal-anim 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modal-anim {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 1.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        #modal-cert-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .modal-image-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.03);
+            border-radius: 8px;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        #modal-cert-img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 6px;
+            object-fit: contain;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Print Media Query */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #111827;
+                padding: 0;
+                min-height: auto;
+            }
+
+            .resume-container {
+                max-width: 100%;
+                background: transparent;
+                border: none;
+                border-radius: 0;
+                padding: 0;
+                box-shadow: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            .control-panel, .modal, .cert-action-badge {
+                display: none !important;
+            }
+
+            h1 {
+                color: #111827;
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                color: #2563eb;
+                font-size: 1.1rem;
+            }
+
+            .contact-info {
+                color: #4b5563;
+                grid-template-columns: repeat(4, 1fr);
+                border-bottom: 1px solid #e5e7eb;
+                padding-bottom: 1rem;
+            }
+
+            .contact-item a {
+                color: #4b5563;
+            }
+
+            .section-title {
+                color: #111827;
+                border-bottom-color: #cbd5e1;
+                font-size: 1.15rem;
+                margin-top: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .skill-card {
+                background: #f9fafb;
+                border-color: #e5e7eb;
+                padding: 0.75rem;
+                box-shadow: none;
+                transform: none !important;
+            }
+
+            .skill-card h4 {
+                color: #111827;
+                font-size: 0.9rem;
+            }
+
+            .skill-card h4 .dot {
+                background-color: #2563eb;
+            }
+
+            .skill-tag {
+                background: #f3f4f6;
+                border-color: #e5e7eb;
+                color: #374151;
+                font-size: 0.75rem;
+            }
+
+            .timeline::before {
+                background: #e5e7eb;
+            }
+
+            .timeline-dot {
+                border-color: #ffffff;
+                background: #2563eb;
+            }
+
+            .role-title {
+                font-size: 1rem;
+                color: #111827;
+            }
+
+            .company-name {
+                font-size: 0.9rem;
+                color: #4b5563;
+            }
+
+            .company-name span {
+                color: #111827;
+            }
+
+            .timeline-date {
+                background: #f3f4f6;
+                border-color: #e5e7eb;
+                color: #4b5563;
+                font-size: 0.75rem;
+            }
+
+            .timeline-content ul {
+                color: #374151;
+                font-size: 0.85rem;
+            }
+
+            .timeline-content li::marker {
+                color: #4b5563;
+            }
+
+            .cert-category-card {
+                background: #f9fafb;
+                border-color: #e5e7eb;
+                padding: 1rem;
+                box-shadow: none;
+            }
+
+            .cert-category-card h4 {
+                color: #2563eb;
+                font-size: 0.9rem;
+                border-bottom-color: #e5e7eb;
+            }
+
+            .cert-item {
+                font-size: 0.8rem;
+                color: #374151;
+                padding: 0;
+                transform: none !important;
+            }
+
+            .cert-name {
+                color: #111827;
+            }
+
+            .cert-issuer {
+                color: #6b7280;
+            }
+
+            .timeline-item, .skill-card, .cert-category-card {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+
+            .resume-container {
+                padding: 1.75rem 1.25rem;
+                border-radius: 16px;
+            }
+
+            .control-panel {
+                margin-bottom: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.85rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .summary-box {
+                margin-bottom: 1.5rem;
+            }
+
+            .summary-box p {
+                font-size: 0.88rem;
+                text-align: left;
+            }
+
+            section {
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.15rem;
+                margin-bottom: 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .skill-card {
+                padding: 1rem;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+                gap: 1.5rem;
+            }
+
+            .timeline-dot {
+                left: -1.22rem;
+            }
+
+            .role-title {
+                font-size: 1rem;
+            }
+
+            .company-name {
+                font-size: 0.88rem;
+            }
+
+            .timeline-date {
+                font-size: 0.75rem;
+                padding: 0.15rem 0.5rem;
+                align-self: flex-start;
+                margin-top: 0.25rem;
+            }
+
+            .timeline-content ul {
+                font-size: 0.85rem;
+            }
+
+            .certificates-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cert-category-card {
+                padding: 1rem;
+            }
+
+            .cert-item {
+                font-size: 0.8rem;
+                padding: 0.2rem;
+            }
+
+            .cert-action-badge {
+                font-size: 0.65rem;
+                padding: 0.05rem 0.25rem;
+                margin-left: 0.25rem;
+            }
+
+            .modal-content {
+                margin: 12% auto;
+                padding: 1rem;
+                width: 95%;
+            }
+
+            #modal-cert-img {
+                max-height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="resume-container">
+        <!-- Control Panel (Actions) -->
+        <div class="control-panel">
+            <div class="theme-toggle-wrapper">
+                <button class="btn-action" id="theme-btn" title="Toggle Light/Dark Theme">
+                    <svg class="sun-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
+                    <svg class="moon-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
+                    <span id="theme-text">Dark</span>
+                </button>
+            </div>
+            <button class="btn-action" onclick="window.print()" title="Print & Save PDF">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                PDF Export
+            </button>
+        </div>
+
+        <!-- Header -->
+        <header class="animate-section">
+            <div class="header-title-area">
+                <h1>Ismixan Mammadov</h1>
+                <div class="subtitle">Information Security Specialist &amp; Penetration Tester</div>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </span>
+                    Baku, Azerbaijan
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </span>
+                    +994 70 902 10 20
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </span>
+                    <a href="mailto:khanmmdv@gmail.com">khanmmdv@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </span>
+                    <a href="https://www.linkedin.com/in/ismixan/" target="_blank">linkedin.com/in/ismixan</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <div class="summary-box animate-section">
+            <p>
+                Dedicated Penetration Tester with hands-on experience in identifying vulnerabilities, conducting security assessments, and managing risks across networks, servers, and web applications. Proven track record of performing comprehensive security audits in diverse environments to identify critical security flaws and enhance organizational security posture. Committed to leveraging strong technical expertise to protect digital assets and strengthen information security defenses.
+            </p>
+        </div>
+
+        <!-- Technical Skills -->
+        <section class="animate-section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h4><span class="dot"></span>Security Testing</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Web Application Pentesting</span>
+                        <span class="skill-tag">Network Penetration Testing</span>
+                        <span class="skill-tag">Vulnerability Assessment</span>
+                        <span class="skill-tag">Exploit Development</span>
+                        <span class="skill-tag">Privilege Escalation</span>
+                        <span class="skill-tag">Manual &amp; Automated Testing</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h4><span class="dot"></span>Tools &amp; Platforms</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Burp Suite</span>
+                        <span class="skill-tag">Nmap</span>
+                        <span class="skill-tag">Nessus</span>
+                        <span class="skill-tag">Metasploit</span>
+                        <span class="skill-tag">Wireshark</span>
+                        <span class="skill-tag">SQLmap</span>
+                        <span class="skill-tag">Gobuster</span>
+                        <span class="skill-tag">theHarvester</span>
+                        <span class="skill-tag">wfuzz</span>
+                        <span class="skill-tag">ffuf</span>
+                        <span class="skill-tag">hydra</span>
+                        <span class="skill-tag">hashcat</span>
+                        <span class="skill-tag">DNSrecon</span>
+                        <span class="skill-tag">Kali Linux</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h4><span class="dot"></span>Methodologies &amp; Code</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OWASP Top 10</span>
+                        <span class="skill-tag">PTES</span>
+                        <span class="skill-tag">Vulnerability Reporting</span>
+                        <span class="skill-tag">Remediation Guidance</span>
+                        <span class="skill-tag">Bash Scripting</span>
+                        <span class="skill-tag">WordPress / PHP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience -->
+        <section class="animate-section">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="timeline">
+                <!-- Exp 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Penetration Tester</div>
+                            <div class="company-name">Center for Digital Health – <span>Ministry of Health of Azerbaijan</span></div>
+                        </div>
+                        <div class="timeline-date">May 2024 – Present</div>
+                    </div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Perform comprehensive vulnerability scans and manual security assessments of network infrastructures to identify critical configuration flaws and access control weaknesses.</li>
+                            <li>Conduct web application penetration testing aligned with OWASP Top 10 standards to identify, validate, and document critical security vulnerabilities.</li>
+                            <li>Analyze privilege escalation paths by developing and simulating custom exploit scenarios in secure staging environments.</li>
+                            <li>Prepare detailed vulnerability reports containing technical findings and remediation strategies to assist development teams in patching gaps and hardening system security.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Academic Mentor</div>
+                            <div class="company-name">Baku Engineering University</div>
+                        </div>
+                        <div class="timeline-date">Jan 2022 – Jun 2022</div>
+                    </div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Taught and mentored Master's level students in the "Modern Computer and Communication Systems" curriculum, focusing on network protocols, topologies, and security foundations.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">IT Administrative Assistant</div>
+                            <div class="company-name">Cargoline LLC</div>
+                        </div>
+                        <div class="timeline-date">Jul 2021 – Nov 2021</div>
+                    </div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Managed and maintained the administrative backend panel of the company's official web portal, securing admin access, updating contents, and monitoring page availability.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Web Developer</div>
+                            <div class="company-name">AsAnt Group SMM</div>
+                        </div>
+                        <div class="timeline-date">May 2020 – Jul 2021</div>
+                    </div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Designed and developed responsive WordPress-based blogs and portfolio websites, implementing secure coding practices, plugins, and customized templates.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="animate-section">
+            <h2 class="section-title">Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Red Team Training Program</div>
+                            <div class="company-name">Xploit Academy</div>
+                        </div>
+                        <div class="timeline-date">2025</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Master of Business Administration (MBA) – Cybersecurity</div>
+                            <div class="company-name">Azerbaijan State University of Economics (UNEC)</div>
+                        </div>
+                        <div class="timeline-date">2020 – 2022</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <div class="role-title">Bachelor of Science in Materials Engineering</div>
+                            <div class="company-name">Azerbaijan State Oil and Industry University (ASOIU)</div>
+                        </div>
+                        <div class="timeline-date">2016 – 2020</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="animate-section">
+            <h2 class="section-title">Certificates &amp; Training</h2>
+            <div class="certificates-grid">
+                <!-- Cert Box 1 -->
+                <div class="cert-category-card">
+                    <h4>Security &amp; Pentesting Certifications</h4>
+                    <ul class="cert-list">
+                        <li class="cert-item interactive-cert" data-img="ejpt.jpg">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div>
+                                <span class="cert-name">eJPT</span> 
+                                <span class="cert-action-badge">View Certificate</span>
+                                <br>
+                                <span class="cert-issuer">(eLearnSecurity Certified Junior Penetration Tester) - INE</span>
+                            </div>
+                        </li>
+                        <li class="cert-item interactive-cert" data-img="webrta.png">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div>
+                                <span class="cert-name">Web-RTA</span> 
+                                <span class="cert-action-badge">View Certificate</span>
+                                <br>
+                                <span class="cert-issuer">(Web Red Team Analyst) - CyberWarFare Labs</span>
+                            </div>
+                        </li>
+                        <li class="cert-item interactive-cert" data-img="capt.jpg">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div>
+                                <span class="cert-name">CAPT</span> 
+                                <span class="cert-action-badge">View Certificate</span>
+                                <br>
+                                <span class="cert-issuer">(Certified Associate Penetration Tester) - HACKVISER</span>
+                            </div>
+                        </li>
+                        <li class="cert-item interactive-cert" data-img="xploit.jpg">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div>
+                                <span class="cert-name">Red Team Course</span> 
+                                <span class="cert-action-badge">View Certificate</span>
+                                <br>
+                                <span class="cert-issuer">- XPLOIT (Outstanding achievement)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Cert Box 2 -->
+                <div class="cert-category-card">
+                    <h4>Courses &amp; Training Badges</h4>
+                    <ul class="cert-list">
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Introduction to Penetration Testing</span> <br><span class="cert-issuer">- Security Blue Team</span></div>
+                        </li>
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Introduction to Bash</span> <br><span class="cert-issuer">- Security Blue Team</span></div>
+                        </li>
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Foundations of Cybersecurity</span> <br><span class="cert-issuer">- Google</span></div>
+                        </li>
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Cybersecurity Compliance Framework</span> <br><span class="cert-issuer">- IBM</span></div>
+                        </li>
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Cyber Threats and Attack Vectors</span> <br><span class="cert-issuer">- University of Colorado</span></div>
+                        </li>
+                        <li class="cert-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div><span class="cert-name">Cyber Defenders &amp; SQL Injection Attacks</span> <br><span class="cert-issuer">- Coursera &amp; EC-Council</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Interactive Cert Image Modal -->
+    <div id="cert-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modal-cert-title">Certificate View</h3>
+            <div class="modal-image-wrapper">
+                <img id="modal-cert-img" src="" alt="Certificate Image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Self-Contained JavaScript Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Theme Switcher (Perfect Toggling between Light Glass & Dark)
+            const body = document.body;
+            const themeBtn = document.getElementById("theme-btn");
+            const themeText = document.getElementById("theme-text");
+            const sunIcon = document.querySelector(".sun-icon");
+            const moonIcon = document.querySelector(".moon-icon");
+
+            if (themeBtn && themeText && sunIcon && moonIcon) {
+                themeBtn.addEventListener("click", () => {
+                    if (body.classList.contains("light-theme")) {
+                        body.classList.remove("light-theme");
+                        body.classList.add("dark-theme");
+                        themeText.textContent = "Light";
+                        sunIcon.style.display = "none";
+                        moonIcon.style.display = "inline";
+                    } else {
+                        body.classList.remove("dark-theme");
+                        body.classList.add("light-theme");
+                        themeText.textContent = "Dark";
+                        sunIcon.style.display = "inline";
+                        moonIcon.style.display = "none";
+                    }
+                });
+            }
+
+            // 2. Interactive Modal for Certificate Images
+            const certModal = document.getElementById("cert-modal");
+            const modalImg = document.getElementById("modal-cert-img");
+            const modalTitle = document.getElementById("modal-cert-title");
+            const modalClose = document.querySelector(".modal-close");
+            const certItems = document.querySelectorAll(".interactive-cert");
+
+            if (certModal && modalImg && modalTitle && modalClose && certItems.length > 0) {
+                certItems.forEach(item => {
+                    item.addEventListener("click", () => {
+                        const certNameEl = item.querySelector(".cert-name");
+                        const certName = certNameEl ? certNameEl.textContent : "Certificate";
+                        const certImgSrc = item.getAttribute("data-img");
+                        
+                        modalTitle.textContent = certName;
+                        modalImg.src = certImgSrc;
+                        certModal.style.display = "block";
+                    });
+                });
+
+                modalClose.addEventListener("click", () => {
+                    certModal.style.display = "none";
+                    modalImg.src = ""; // Clear source
+                });
+
+                window.addEventListener("click", (e) => {
+                    if (e.target === certModal) {
+                        certModal.style.display = "none";
+                        modalImg.src = ""; // Clear source
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
